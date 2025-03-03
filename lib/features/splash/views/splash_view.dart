@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:reefy/core/utils/constants/app_constant.dart';
 import 'package:reefy/core/utils/constants/app_router.dart';
 import 'package:reefy/core/utils/constants/app_strings.dart';
 import 'package:reefy/core/utils/constants/assets_manager.dart';
+import 'package:reefy/core/utils/constants/color_manager.dart';
+import 'package:reefy/core/utils/constants/values_manager.dart';
 import 'package:reefy/shared/shared_preference_helper.dart';
 
 class SplashView extends StatefulWidget {
@@ -15,22 +18,30 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   Timer? _timer;
-  bool isShow = true;
+ bool isShow=false;
 
   _startDelay() {
     _timer = Timer(const Duration(seconds: AppConstants.splashDelay), _goNext);
   }
 
-  _goNext() {
-    isShow = CacheNetwork.preferences.getBool(AppStrings.onBoardingKey) ?? true;
 
+_goNext() async {
+  isShow = CacheNetwork.isOnboardingCompleted(); // ✅ Use helper function
+
+  if (mounted) { 
     if (isShow) {
-      Navigator.pushReplacementNamed(context, Routes.onBoardingRoute);
+      Navigator.pushReplacementNamed(context, Routes.registerRoute);
     } else {
-      Navigator.pushReplacementNamed(context, Routes.loginRoute);
+      await CacheNetwork.insertBoolToCache(key: AppStrings.onBoardingKey, value: true); // ✅ Only set after showing onboarding
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, Routes.onBoardingRoute);
+      }
     }
-    CacheNetwork.insertBoolToCache(key: AppStrings.onBoardingKey, value: false);
   }
+}
+
+
+
 
   @override
   void initState() {
@@ -41,15 +52,28 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(ImageAssets.splashLogoPng),
-            fit: BoxFit.fill, // Ensures the image covers the full screen
+      body: Column(
+        children: [
+          SizedBox(height: AppSize.s140.h),
+          Center(
+            child: Image.asset(
+              ImageAssets.splashLogoPng,
+              width: 200.w,
+              height: 200.h,
+            ),
           ),
-        ),
+          SizedBox(height: AppSize.s20.h),
+          Text(
+            AppStrings.logoName,
+            style: TextStyle(
+              fontSize: AppSize.s40.sp,
+              fontWeight: FontWeight.w800,
+              color: ColorManager.logNameColor,
+            
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

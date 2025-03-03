@@ -1,3 +1,4 @@
+import 'package:reefy/core/utils/constants/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheNetwork {
@@ -28,4 +29,8 @@ class CacheNetwork {
   static Future<bool> deleteCacheItem({required String key}) async {
     return await preferences.remove(key);
   }
+    static bool isOnboardingCompleted() {
+    return preferences.getBool(AppStrings.onBoardingKey) ?? false;
+  }
+  
 }

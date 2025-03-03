@@ -11,7 +11,7 @@ TextStyle _getTextStyle(double fonSize,FontWeight fontWeight,Color color){
   );
 }
 // regular style
-TextStyle regularStyle({double fontSize=FontSize.s12,required Color color,}){
+TextStyle regularStyle({double fontSize=FontSize.s16,required Color color,}){
   return _getTextStyle(fontSize,FontWeightManager.regular,color );
 }
 // medium style

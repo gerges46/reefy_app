@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         child: MaterialApp(
           theme: ThemeData(
+            scaffoldBackgroundColor: Colors.white,
             fontFamily:FontConstants.fontFamily,
             textTheme: TextTheme(
               bodyMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
