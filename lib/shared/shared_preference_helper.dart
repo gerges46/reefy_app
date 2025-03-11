@@ -1,4 +1,6 @@
-import 'package:reefy/core/utils/constants/app_strings.dart';
+
+
+import 'package:checkin/core/utils/constants/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheNetwork {
@@ -32,5 +34,7 @@ class CacheNetwork {
     static bool isOnboardingCompleted() {
     return preferences.getBool(AppStrings.onBoardingKey) ?? false;
   }
+
+
   
 }

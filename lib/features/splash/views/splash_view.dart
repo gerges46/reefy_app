@@ -1,13 +1,15 @@
 import 'dart:async';
+import 'package:checkin/core/utils/constants/app_constant.dart';
+import 'package:checkin/core/utils/constants/app_router.dart';
+import 'package:checkin/core/utils/constants/app_strings.dart';
+import 'package:checkin/core/utils/constants/assets_manager.dart';
+import 'package:checkin/core/utils/constants/color_manager.dart';
+import 'package:checkin/core/utils/constants/values_manager.dart';
+import 'package:checkin/shared/shared_preference_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:reefy/core/utils/constants/app_constant.dart';
-import 'package:reefy/core/utils/constants/app_router.dart';
-import 'package:reefy/core/utils/constants/app_strings.dart';
-import 'package:reefy/core/utils/constants/assets_manager.dart';
-import 'package:reefy/core/utils/constants/color_manager.dart';
-import 'package:reefy/core/utils/constants/values_manager.dart';
-import 'package:reefy/shared/shared_preference_helper.dart';
+
+
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -25,22 +27,50 @@ class _SplashViewState extends State<SplashView> {
   }
 
 
-_goNext() async {
-  isShow = CacheNetwork.isOnboardingCompleted(); // ✅ Use helper function
+// _goNext() async {
+//   isShow = CacheNetwork.isOnboardingCompleted(); 
+//  String? token = CacheNetwork.getCacheData(key: 'token');
+//   if (mounted) { 
+//     if (isShow) {
+//       Navigator.pushReplacementNamed(context, Routes.loginRoute);
+//     } else {
+//       await CacheNetwork.insertBoolToCache(key: AppStrings.onBoardingKey, value: true); 
+//       if (mounted) {
+//         Navigator.pushReplacementNamed(context, Routes.onBoardingRoute);
+//       }
+//     }
+//             if (token != null && token.isNotEmpty) {
+//           print("User is logged in, navigating to Home Layout");
+//           Navigator.pushReplacementNamed(context, Routes.homeRoute); // Replace with your home screen route
+//         } else {
+//           print("User is NOT logged in, navigating to Register");
+//           Navigator.pushReplacementNamed(context, Routes.registerRoute); // Replace with your register/login screen route
+//         }
+    
+//   }
+// }
 
-  if (mounted) { 
-    if (isShow) {
-      Navigator.pushReplacementNamed(context, Routes.registerRoute);
-    } else {
-      await CacheNetwork.insertBoolToCache(key: AppStrings.onBoardingKey, value: true); // ✅ Only set after showing onboarding
+
+_goNext() async {
+  bool isOnboardingCompleted = CacheNetwork.isOnboardingCompleted(); 
+  String? token = CacheNetwork.getCacheData(key: 'token');
+
+  if (mounted) {
+    if (!isOnboardingCompleted) {
+      // First-time user -> Show onboarding
+      await CacheNetwork.insertBoolToCache(key: AppStrings.onBoardingKey, value: true);
       if (mounted) {
         Navigator.pushReplacementNamed(context, Routes.onBoardingRoute);
       }
+    } else if (token != null && token.isNotEmpty) {
+      // User is logged in -> Go to Home
+      Navigator.pushReplacementNamed(context, Routes.homeRoute);
+    } else {
+      // User is not logged in -> Go to Register/Login
+      Navigator.pushReplacementNamed(context, Routes.roleRoute);
     }
   }
 }
-
-
 
 
   @override

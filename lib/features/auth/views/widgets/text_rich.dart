@@ -1,8 +1,8 @@
 
+import 'package:checkin/core/utils/constants/color_manager.dart';
+import 'package:checkin/core/utils/constants/values_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:reefy/core/utils/constants/app_strings.dart';
-import 'package:reefy/core/utils/constants/color_manager.dart';
-import 'package:reefy/core/utils/constants/values_manager.dart';
+
 
 class TextRich extends StatelessWidget {
   const TextRich({

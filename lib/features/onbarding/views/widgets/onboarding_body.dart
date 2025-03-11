@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:reefy/core/utils/constants/onboarding_const.dart';
-import 'package:reefy/core/utils/constants/values_manager.dart';
-import 'package:reefy/features/onbarding/view_model/onboarding/onboarding_cubit.dart';
+
+
+import '../../../../core/utils/constants/onboarding_const.dart';
+import '../../../../core/utils/constants/values_manager.dart' show AppPadding, AppSize;
+import '../../view_model/onboarding/onboarding_cubit.dart';
 
 class OnboardingBody extends StatelessWidget {
   const OnboardingBody({super.key});
@@ -27,7 +29,7 @@ class OnboardingBody extends StatelessWidget {
                               SizedBox(height: AppSize.s40.h),
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: AppPadding.p16,
+                                  horizontal: AppPadding.p16.h,
                                 ),
                                 child: Text(
                                   onBoardingList[index].title,

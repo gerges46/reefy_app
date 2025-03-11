@@ -1,6 +1,8 @@
-import 'package:reefy/core/utils/constants/app_strings.dart';
-import 'package:reefy/core/utils/constants/assets_manager.dart';
-import 'package:reefy/features/onbarding/model/onboarding_model.dart';
+import 'package:checkin/core/utils/constants/app_strings.dart' show AppStrings;
+import 'package:checkin/core/utils/constants/assets_manager.dart' show ImageAssets;
+
+
+import '../../../features/onbarding/model/onboarding_model.dart';
 
 List<OnboardingModel> onBoardingList = [
   OnboardingModel(

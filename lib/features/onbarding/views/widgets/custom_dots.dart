@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reefy/core/utils/constants/app_strings.dart';
-import 'package:reefy/core/utils/constants/color_manager.dart';
-import 'package:reefy/core/utils/constants/onboarding_const.dart';
-import 'package:reefy/core/utils/constants/values_manager.dart';
-import 'package:reefy/features/onbarding/view_model/onboarding/onboarding_cubit.dart';
-import 'package:reefy/features/onbarding/view_model/onboarding/onboarding_state.dart';
+
+import '../../../../core/utils/constants/color_manager.dart';
+import '../../../../core/utils/constants/onboarding_const.dart';
+import '../../../../core/utils/constants/values_manager.dart';
+import '../../view_model/onboarding/onboarding_cubit.dart';
+import '../../view_model/onboarding/onboarding_state.dart';
+
 
 class CustomDots extends StatelessWidget {
   const CustomDots({super.key, });

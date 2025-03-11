@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:reefy/core/utils/constants/app_router.dart';
+
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:reefy/core/utils/constants/font_manager.dart';
+
+
+import '../core/utils/constants/app_router.dart';
+import '../core/utils/constants/font_manager.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

@@ -1,6 +1,7 @@
+import 'package:checkin/app/app.dart';
+import 'package:checkin/shared/shared_preference_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:reefy/app/app.dart';
-import 'package:reefy/shared/shared_preference_helper.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

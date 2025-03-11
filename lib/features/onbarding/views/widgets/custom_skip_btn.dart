@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:reefy/core/utils/constants/app_strings.dart';
-import 'package:reefy/core/utils/constants/color_manager.dart';
-import 'package:reefy/core/utils/constants/values_manager.dart';
+
+import '../../../../core/utils/constants/color_manager.dart';
+import '../../../../core/utils/constants/values_manager.dart';
+
 
 class CustomSkipBtn extends StatelessWidget {
   const CustomSkipBtn({super.key, required this.text, this.onPressed, required this.icon});

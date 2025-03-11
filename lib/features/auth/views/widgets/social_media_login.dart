@@ -1,8 +1,9 @@
 
+import 'package:checkin/core/utils/constants/assets_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:reefy/core/utils/constants/assets_manager.dart';
+
 
 import '../../../../core/utils/constants/color_manager.dart';
 import '../../../../core/utils/constants/values_manager.dart';

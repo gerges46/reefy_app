@@ -1,18 +1,19 @@
+import 'package:checkin/core/utils/constants/app_router.dart';
+import 'package:checkin/core/utils/constants/app_strings.dart';
+import 'package:checkin/core/utils/constants/color_manager.dart';
+import 'package:checkin/core/utils/constants/onboarding_const.dart';
+import 'package:checkin/core/utils/constants/values_manager.dart';
+import 'package:checkin/features/onbarding/view_model/onboarding/onboarding_cubit.dart';
+import 'package:checkin/features/onbarding/view_model/onboarding/onboarding_state.dart';
+import 'package:checkin/features/onbarding/views/widgets/custom_dots.dart';
+import 'package:checkin/features/onbarding/views/widgets/custom_skip_btn.dart';
+import 'package:checkin/features/onbarding/views/widgets/onboarding_body.dart';
+import 'package:checkin/shared/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:reefy/core/utils/constants/app_router.dart';
-import 'package:reefy/core/utils/constants/app_strings.dart';
-import 'package:reefy/core/utils/constants/color_manager.dart';
-import 'package:reefy/core/utils/constants/onboarding_const.dart';
-import 'package:reefy/core/utils/constants/values_manager.dart';
-import 'package:reefy/features/onbarding/view_model/onboarding/onboarding_cubit.dart';
-import 'package:reefy/features/onbarding/view_model/onboarding/onboarding_state.dart';
-import 'package:reefy/features/onbarding/views/widgets/custom_dots.dart';
-import 'package:reefy/features/onbarding/views/widgets/custom_skip_btn.dart';
-import 'package:reefy/features/onbarding/views/widgets/onboarding_body.dart';
-import 'package:reefy/shared/custom_button.dart';
-import 'package:reefy/shared/shared_preference_helper.dart';
+
+
 
 class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});

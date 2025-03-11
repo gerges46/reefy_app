@@ -1,17 +1,17 @@
+import 'package:checkin/core/utils/constants/app_router.dart';
+import 'package:checkin/core/utils/constants/app_strings.dart';
+import 'package:checkin/core/utils/constants/color_manager.dart';
+import 'package:checkin/core/utils/constants/style_manager.dart';
+import 'package:checkin/core/utils/constants/values_manager.dart';
+import 'package:checkin/features/auth/view_model/auth_cubit/auth_cubit.dart';
+import 'package:checkin/features/auth/view_model/auth_cubit/auth_state.dart';
+import 'package:checkin/features/auth/views/widgets/custom_textform_field.dart';
+import 'package:checkin/features/auth/views/widgets/social_media_login.dart';
+import 'package:checkin/features/auth/views/widgets/text_rich.dart';
+import 'package:checkin/shared/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:reefy/core/utils/constants/app_router.dart';
-import 'package:reefy/core/utils/constants/app_strings.dart';
-import 'package:reefy/core/utils/constants/color_manager.dart';
-import 'package:reefy/core/utils/constants/style_manager.dart';
-import 'package:reefy/core/utils/constants/values_manager.dart';
-import 'package:reefy/features/auth/view_model/auth_cubit/auth_cubit.dart';
-import 'package:reefy/features/auth/view_model/auth_cubit/auth_state.dart';
-import 'package:reefy/features/auth/views/widgets/custom_textform_field.dart';
-import 'package:reefy/features/auth/views/widgets/social_media_login.dart';
-import 'package:reefy/features/auth/views/widgets/text_rich.dart';
-import 'package:reefy/shared/custom_button.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -108,6 +108,15 @@ class LoginView extends StatelessWidget {
                             BlocProvider.of<AuthCubit>(
                               context,
                             ).passwordController,
+                            
+                              isSecure: BlocProvider.of<AuthCubit>(context).isSecure,
+                              suffixIcon: IconButton(
+                                onPressed: () =>
+                                    AuthCubit.getCubit(context).isSecurePass(),
+                                icon: AuthCubit.getCubit(context).isSecure
+                                    ? const Icon(Icons.visibility_off)
+                                    : const Icon(Icons.visibility),
+                              ),
                       ),
                       SizedBox(height: AppSize.s16),
                       Align(
@@ -115,7 +124,12 @@ class LoginView extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.only(right: AppPadding.p24),
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                Routes.forgetPasswordRoute,
+                              );
+                            },
                             child: Text(
                               AppStrings.forgetPassword,
 
@@ -168,7 +182,7 @@ class LoginView extends StatelessWidget {
                       ),
 
                       TextRich(
-                        text1:  AppStrings.dontHaveAccount,
+                        text1: AppStrings.dontHaveAccount,
                         text2: AppStrings.signUp,
                         onTap: () {
                           Navigator.pushNamed(context, Routes.registerRoute);
