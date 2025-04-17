@@ -15,7 +15,11 @@ class ImageAssets {
   static const String vectorBack = "$imagePath/Vector.png";
   static const String faceBook = "$imagePath/facebook_ic.svg";
   static const String google = "$imagePath/google_ic.svg";
-  static const String doctor = "$imagePath/doctor 1.png";
-  static const String user = "$imagePath/boy 1.png";
-  static const String farmer = "$imagePath/farmer (1) 1.png";
+  static const String doctor = "$imagePath/doctor.png";
+  static const String user = "$imagePath/boy.png";
+  static const String farmer = "$imagePath/farmer.png";
+  static const String farmerNav = "$imagePath/farmer_nav.svg";
+  static const String doctorNav = "$imagePath/doctor_nav.svg";
+  static const String priceNav = "$imagePath/price_nav.svg";
+  static const String farmImage = "$imagePath/farm.png";
 }

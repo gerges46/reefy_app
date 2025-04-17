@@ -6,7 +6,6 @@ import 'package:checkin/core/utils/constants/values_manager.dart';
 import 'package:checkin/features/auth/view_model/auth_cubit/auth_cubit.dart';
 import 'package:checkin/features/auth/view_model/auth_cubit/auth_state.dart';
 import 'package:checkin/features/auth/views/widgets/custom_textform_field.dart';
-import 'package:checkin/features/auth/views/widgets/social_media_login.dart';
 import 'package:checkin/features/auth/views/widgets/text_rich.dart';
 import 'package:checkin/shared/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -146,9 +145,7 @@ class LoginView extends StatelessWidget {
 
                       CustomButton(
                         title:
-                            state is LoginLoadingState
-                                ? "Loading..."
-                                : AppStrings.login,
+                            AppStrings.login,
                         color: ColorManager.primary,
                         textColor: ColorManager.white,
                         onPressed: () {
@@ -163,23 +160,23 @@ class LoginView extends StatelessWidget {
                               password:
                                   BlocProvider.of<AuthCubit>(
                                     context,
-                                  ).passwordController.text,
+                                  ).passwordController.text,  context: context ,
                             );
                           }
                         },
                       ),
-                      SizedBox(height: AppSize.s46.h),
-                      Text(
-                        AppStrings.optionTextLogin,
-                        style: regularStyle(color: ColorManager.textFillColor2),
-                      ),
-                      SizedBox(height: AppSize.s18.h),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: AppPadding.p22.h,
-                        ),
-                        child: SocialMediaLogin(),
-                      ),
+                   //   SizedBox(height: AppSize.s46.h),
+                      // Text(
+                      //   AppStrings.optionTextLogin,
+                      //   style: regularStyle(color: ColorManager.textFillColor2),
+                      // ),
+                      // SizedBox(height: AppSize.s18.h),
+                      // Padding(
+                      //   padding: EdgeInsets.symmetric(
+                      //     horizontal: AppPadding.p22.h,
+                      //   ),
+                      //   child: SocialMediaLogin(),
+                      // ),
 
                       TextRich(
                         text1: AppStrings.dontHaveAccount,

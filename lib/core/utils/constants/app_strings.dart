@@ -31,4 +31,6 @@ class AppStrings {
   static const farmer=" مزارع";
   static const doctor=" طبيب";
   static const user=" هاوى";
+  static const chooseRole="لنبدأ معًا! أي نوع من المستخدمين أنت؟";
+  static const addBrain="اضافة عنبر";
 }

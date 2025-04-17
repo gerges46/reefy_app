@@ -3,15 +3,29 @@ import 'package:checkin/features/auth/view_model/auth_cubit/auth_cubit.dart';
 abstract class AuthState {}
 
 final class AuthInitialState extends AuthState {}
-class LoginLoadingState extends AuthState{}
-class LoginSuccess extends AuthState{}
- class RegisterSecurePassState extends AuthState{}
-class LoginFailureState extends AuthState{
+
+class LoginLoadingState extends AuthState {}
+
+class LoginSuccess extends AuthState {}
+
+class RegisterSecurePassState extends AuthState {}
+
+class LoginFailureState extends AuthState {
   final String errorMessage;
 
   LoginFailureState(this.errorMessage);
-  
 }
+
+class RegisterLoadingState extends AuthState {}
+
+class RegisterSuccessState extends AuthState {}
+
+class RegisterFailureState extends AuthState {
+  final String errorMessage;
+
+  RegisterFailureState(this.errorMessage);
+}
+
 class ResetPasswordLoading extends AuthState {}
 
 class OTPSentSuccess extends AuthState {
@@ -21,15 +35,15 @@ class OTPSentSuccess extends AuthState {
 
 class OTPVerified extends AuthState {}
 
-class PasswordResetSuccess extends AuthState{}
+class PasswordResetSuccess extends AuthState {}
 
 class ResetPasswordError extends AuthState {
   final String message;
   ResetPasswordError(this.message);
 }
-class AuthRoleSelectedState extends AuthState{
+
+class AuthRoleSelectedState extends AuthState {
   final UserRole role;
 
   AuthRoleSelectedState(this.role);
-
 }

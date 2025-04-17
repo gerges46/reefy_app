@@ -13,8 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
-
 class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});
 
@@ -38,6 +36,7 @@ class OnboardingView extends StatelessWidget {
                         text: AppStrings.skip,
                         icon: Icons.arrow_forward_ios,
                         onPressed: () {
+                          // register
                           Navigator.pushReplacementNamed(
                             context,
                             Routes.registerRoute,
@@ -62,7 +61,8 @@ class OnboardingView extends StatelessWidget {
                       
                           Navigator.pushReplacementNamed(
                             context,
-                            Routes.registerRoute,
+                            // register
+                            Routes.roleRoute,
                           );
                         }
                       },

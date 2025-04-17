@@ -9,9 +9,10 @@ import '../../../../core/utils/constants/values_manager.dart';
 
 class CustomBackBtn extends StatelessWidget {
   const CustomBackBtn({
-    super.key, this.onPressed,
+    super.key, this.onPressed, this.text,
   });
 final void Function()? onPressed;
+final String? text;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -33,6 +34,7 @@ final void Function()? onPressed;
           ),
         ),
         Text(
+          text??
           AppStrings.welcomeRegister,
           textAlign: TextAlign.center,
           style: TextStyle(

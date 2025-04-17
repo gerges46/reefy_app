@@ -143,7 +143,7 @@ final TextInputType? keyboardType;
 
           // Apply email-specific validation only if isEmail is true
           if (isEmail && (!value.contains('@') || !value.endsWith('.com'))) {
-            return "  يجب أن يحتوي البريد الإلكتروني على '@' وينتهي بـ '.com'!";
+            return "'.com' يجب أن يحتوي البريد الإلكتروني على '@' وينتهي بـ ";
           }
 
           return null;

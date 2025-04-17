@@ -1,7 +1,9 @@
 class AppConstants{
   static const splashDelay=3;
   static const sliderAnimationTime=3;
-  static const endPoint="https://student.valuxapps.com/api/";
-
+  static const baseUrl="http://farmsmanagement.runasp.net/api/";
+  static const token="token";
+static const farmFirstTime="first_time_farm";
+static const roleIdKey="role";
 }
 const bool isShow =true;
