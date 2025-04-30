@@ -10,6 +10,7 @@ class DoctorDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("🧪 RoleName: ${doctor.roleName}");
     return Scaffold(
       appBar: AppBar(title: Text("تفاصيل الطبيب"),
       backgroundColor: Colors.white,
@@ -25,6 +26,9 @@ class DoctorDetailScreen extends StatelessWidget {
             SizedBox(height: 10.h),
             Text('المنطقة: ${doctor.region ?? 'غير متوفرة'}', style: TextStyle(fontSize: 18.sp)),
             SizedBox(height: 10.h),
+            Text('الدور: ${doctor.roleName ?? 'غير معروف'}'),
+
+
             Text('المحافظة: ${doctor.governorate ?? 'غير متوفرة'}', style: TextStyle(fontSize: 18.sp)),
             SizedBox(height: 10.h),
             Text('الهاتف: ${doctor.phone ?? 'غير متوفر'}', style: TextStyle(fontSize: 18.sp)),
@@ -45,4 +49,5 @@ class DoctorDetailScreen extends StatelessWidget {
       ),
     );
   }
+
 }

@@ -25,23 +25,26 @@ class LoginView extends StatelessWidget {
         body: SafeArea(
           child: BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {
-              if (state is LoginSuccess) {
-                Navigator.pushReplacementNamed(context, Routes.homeRoute);
-              } else if (state is LoginFailureState) {
+              // if (state is LoginSuccess) {
+              //   Navigator.pushReplacementNamed(context, Routes.homeRoute);
+              // }
+             if (state is LoginFailureState) {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text(state.errorMessage.toString()),
-                      content: const Text(AppStrings.dailogText),
-                      actions: <Widget>[
-                        TextButton(
-                          child: const Text(AppStrings.ok),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
+                    return SingleChildScrollView(
+                      child: AlertDialog(
+                        title: Text(state.errorMessage.toString()),
+                        content: const Text(AppStrings.dailogText),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text(AppStrings.ok),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
                     );
                   },
                 );
@@ -165,19 +168,6 @@ class LoginView extends StatelessWidget {
                           }
                         },
                       ),
-                   //   SizedBox(height: AppSize.s46.h),
-                      // Text(
-                      //   AppStrings.optionTextLogin,
-                      //   style: regularStyle(color: ColorManager.textFillColor2),
-                      // ),
-                      // SizedBox(height: AppSize.s18.h),
-                      // Padding(
-                      //   padding: EdgeInsets.symmetric(
-                      //     horizontal: AppPadding.p22.h,
-                      //   ),
-                      //   child: SocialMediaLogin(),
-                      // ),
-
                       TextRich(
                         text1: AppStrings.dontHaveAccount,
                         text2: AppStrings.signUp,

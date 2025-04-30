@@ -5,6 +5,8 @@ import 'package:checkin/features/layout/view_model/cubit/layout_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/utils/constants/app_constant.dart';
+import '../../../../shared/shared_preference_helper.dart';
 import '../../../home/user/views/user_home_view.dart';
 import '../../../prices/price_view.dart';
 import '../../../profile/views/profile_view.dart';
@@ -22,7 +24,9 @@ class LayoutCubit extends Cubit<LayoutState> {
   }
 
   List<Widget> get pages {
-    if (authCubit.selectedRole == UserRole.farmer) {
+    final roleId = CacheNetwork.getStringFromCache(key: AppConstants.roleIdKey) ?? '5';
+  
+     if (roleId == '6') { // مزارع
       return [
         FarmerHomeView(),
      //   FarmerToolsPage(),
@@ -30,7 +34,8 @@ class LayoutCubit extends Cubit<LayoutState> {
         ProfileView(),
         ProfileView(),
       ];
-    } else if (authCubit.selectedRole == UserRole.doctor) {
+  } 
+  else if (roleId == '7') { // دكتور
       return [
         DoctorHomeView(),
      //   DoctorAppointmentsPage(),
@@ -38,14 +43,15 @@ class LayoutCubit extends Cubit<LayoutState> {
         ProfileView(),
         ProfileView(),
       ];
-    } else {
-      return [
+  } 
+  else { // هاوي
+     return [
         UserHomeView(),
         PriceView(),
         ProfileView(),
         ProfileView(),
       ];
-    }
+  }
   }
   
   List<BottomNavigationBarItem> get navItems {

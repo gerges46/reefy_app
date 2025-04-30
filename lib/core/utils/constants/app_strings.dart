@@ -7,7 +7,7 @@ class AppStrings {
   static const welcomeText2 = " سعيد لرؤيتك مرة أخرى";
   static const filedEmailText = "رقم الهاتف / الايميل";
   static const filedPasswordText = "كلمة السر ";
-  static const login = "ارسال";
+  static const login = "تسجيل الدخول";
   static const optionTextLogin = "أو تسجيل الدخول باستخدام";
   static const dontHaveAccount = "ليس لديك حساب؟ ";
   static const signUp = "سجل الان";

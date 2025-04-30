@@ -1,7 +1,6 @@
 import 'package:checkin/core/utils/constants/app_constant.dart';
 import 'package:checkin/core/utils/constants/app_router.dart';
 import 'package:checkin/features/auth/view_model/auth_cubit/auth_state.dart';
-
 import 'package:checkin/shared/shared_preference_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -63,78 +62,10 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthInitialState());
   }
 
-  // Future<void> login({
-  //   required String email,
-  //   required String password,
-  //   required BuildContext context,
-  // }) async {
-  //   emit(LoginLoadingState());
-  //   try {
-  //     final response = await dio.post(
-  //       "${AppConstants.baseUrl}Users/login",
-  //       data: {"email": email, "password": password},
-  //       options: Options(headers: {
-  //         "lang": "ar",
-  //         "Content-Type": "application/json",
-  //         "Accept": "application/json",
-  //       }),
-  //     );
-
-  //     print("Login Response: ${response.data}");
-  // print("🟢 Response status code: ${response.statusCode}");
-  //     print("🟢 Full response data: ${response.data}");
-  //     print("🟢 Response headers: ${response.headers}");
-  //     if (response.statusCode == 200 && response.data["success"] == true) {
-  //       // استخراج التوكن من الرسالة
-  //       String message = response.data["message"] ?? "";
-  //       String token = message.split(" - ").first;
-  //       print("🟢 User data received: ${response.data}");
-  //       if (token.isEmpty) {
-  //         emit(LoginFailureState("لا يوجد توكن في الاستجابة"));
-  //         return;
-  //       }
-
-  //       // حفظ التوكن
-  //       await CacheNetwork.insertToCache(key: 'token', value: token);
-
-  //       // جلب بيانات المستخدم باستخدام التوكن كـ parameter
-  //      final userData = await _getUserData(token);
-
-  //       if (userData != null) {
-  //         // حفظ بيانات المستخدم
-  //         await CacheNetwork.insertToCache(
-  //           key: AppConstants.roleIdKey,
-  //           value: userData['role'] ?? 'user',
-  //         );
-
-  //         emit(LoginSuccess());
-  //         _navigateAfterAuth(context);
-  //       } else {
-  //         emit(LoginFailureState("فشل في جلب بيانات المستخدم"));
-  //       }
-  //     } else {
-  //       clearSelectedRole();
-  //       await CacheNetwork.deleteCacheItem(key: AppConstants.roleIdKey);
-  //       String errorMsg = response.data["errorMessage"] ?? "فشل تسجيل الدخول";
-  //       emit(LoginFailureState(errorMsg));
-  //     }
-  //   } catch (e) {
-  //     clearSelectedRole();
-  //     await CacheNetwork.deleteCacheItem(key: AppConstants.roleIdKey);
-  //     String errorMessage = "حدث خطأ في الاتصال بالسيرفر";
-  //     if (e is DioException) {
-  //       errorMessage = e.response?.data["errorMessage"] ?? e.message ?? errorMessage;
-  //       print("Dio Error Details: ${e.response?.data}");
-  //     }
-  //     emit(LoginFailureState(errorMessage));
-  //   }
-  // }
-
   Future<Map<String, dynamic>?> _getUserData(String token) async {
     try {
       print("🔵 Getting user data with token: $token");
 
-      // الطريقة الصحيحة: إرسال التوكن كـ query parameter زي Postman
       final response = await dio.get(
         "${AppConstants.baseUrl}Users/getuser-bytoken?token=$token",
         options: Options(headers: {"lang": "ar", "Accept": "application/json"}),
@@ -157,7 +88,7 @@ class AuthCubit extends Cubit<AuthState> {
         return null;
       }
     } catch (e) {
-      print("🔴 Error in _getUserData: $e");
+      print(" Error in _getUserData: $e");
       if (e is DioException) {
         print("🔴 Dio error details: ${e.response?.data}");
       }
@@ -165,86 +96,93 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> login({
-    required String email,
-    required String password,
-    required BuildContext context,
-  }) async {
-    emit(LoginLoadingState());
-    try {
-      final response = await dio.post(
-        "${AppConstants.baseUrl}Users/login",
-        data: {"email": email, "password": password},
-        options: Options(
-          headers: {
-            "lang": "ar",
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-          },
-        ),
-      );
+Future<void> login({
+  required String email,
+  required String password,
+  required BuildContext context,
+}) async {
+  emit(LoginLoadingState());
+  try {
+    final response = await dio.post(
+      "${AppConstants.baseUrl}Users/login",
+     // data: {"email": email, "password": password},
+       queryParameters: {
+    "email": email,
+    "password": password,
+  },
+      options: Options(
+        headers: {
+          "lang": "ar",
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+      ),
+    );
 
-      print("Login Response: ${response.data}");
-      print("🟢 Response status code: ${response.statusCode}");
-      print("🟢 Full response data: ${response.data}");
-      print("🟢 Response headers: ${response.headers}");
+    print("Login Response: ${response.data}");
 
-      if (response.statusCode == 200 && response.data["success"] == true) {
-        // String message = response.data["message"] ?? "";
-        // String token = message.split(" - ").first;
-        String message = response.data["message"] ?? "";
-        String token =
-            message.contains(" - ")
-                ? message.split(" - ").first.trim()
-                : message.trim();
+    if (response.statusCode == 200 && response.data["success"] == true) {
+      String message = response.data["message"] ?? "";
+      String token = message.contains(" - ") 
+          ? message.split(" - ").first.trim() 
+          : message.trim();
 
-        print("🟢 Token extracted: $token");
+      print("🟢 Token extracted: $token");
 
-        if (token.isEmpty) {
-          emit(LoginFailureState("لا يوجد توكن في الاستجابة"));
-          return;
-        }
-
-        // حفظ التوكن
-        await CacheNetwork.insertToCache(key: AppConstants.token, value: token);
-
-        // ✅ التحقق من صلاحية التوكن بإرساله في Body
-        bool isValid = await validateToken(token);
-        if (!isValid) {
-          emit(LoginFailureState("التوكن غير صالح أو المستخدم غير معروف"));
-          return;
-        }
-
-        // ✅ التوكن صالح، نجيب بيانات المستخدم
-        final userData = await _getUserData(token);
-        if (userData != null) {
-          await CacheNetwork.insertToCache(
-            key: AppConstants.roleIdKey,
-            value: userData['role'] ?? 'user',
-          );
-          emit(LoginSuccess());
-          _navigateAfterAuth(context);
-        } else {
-          emit(LoginFailureState("فشل في جلب بيانات المستخدم"));
-        }
-      } else {
-        clearSelectedRole();
-        await CacheNetwork.deleteCacheItem(key: AppConstants.roleIdKey);
-        String errorMsg = response.data["errorMessage"] ?? "فشل تسجيل الدخول";
-        emit(LoginFailureState(errorMsg));
+      if (token.isEmpty) {
+        emit(LoginFailureState("لا يوجد توكن في الاستجابة"));
+        return;
       }
-    } catch (e) {
+
+      // حفظ التوكن أولاً
+      await CacheNetwork.insertToCache(key: AppConstants.token, value: token);
+
+      // التحقق من صحة التوكن
+      bool isValid = await validateToken(token);
+      if (!isValid) {
+        emit(LoginFailureState("التوكن غير صالح أو المستخدم غير معروف"));
+        return;
+      }
+
+      // جلب بيانات المستخدم مرة واحدة فقط
+      final userData = await _getUserData(token);
+      if (userData != null) {
+        // حفظ roleId من userData
+        await CacheNetwork.insertToCache(
+          key: AppConstants.roleIdKey,
+          value: userData['roleId'].toString(), // تأكد أنه 'roleId' مش 'role'
+        );
+        
+         // أضف هذا السطر لطباعة القيمة المحفوظة
+  print('🟢🟢🟢 Saved roleId: ${userData['roleId'].toString()} 🟢🟢🟢');
+  
+  print('🟢 User role saved: ${userData['roleId']}');
+        print('🟢 User role saved: ${userData['roleId']}');
+        emit(LoginSuccess());
+        // _navigateAfterAuth(context);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+  _navigateAfterAuth(context);
+});
+      } else {
+        emit(LoginFailureState("فشل في جلب بيانات المستخدم"));
+      }
+    } else {
       clearSelectedRole();
       await CacheNetwork.deleteCacheItem(key: AppConstants.roleIdKey);
-      String errorMessage = "حدث خطأ في الاتصال بالسيرفر";
-      if (e is DioException) {
-        errorMessage =
-            e.response?.data["errorMessage"] ?? e.message ?? errorMessage;
-        print("Dio Error Details: ${e.response?.data}");
-      }
-      emit(LoginFailureState(errorMessage));
+      String errorMsg = response.data["errorMessage"] ?? "فشل تسجيل الدخول";
+      emit(LoginFailureState(errorMsg));
     }
+  } catch (e) {
+    clearSelectedRole();
+    await CacheNetwork.deleteCacheItem(key: AppConstants.roleIdKey);
+    String errorMessage = "حدث خطأ في الاتصال بالسيرفر";
+    if (e is DioException) {
+      errorMessage = e.response?.data["errorMessage"] ?? e.message ?? errorMessage;
+      print("Dio Error Details: ${e.response?.data}");
+    }
+    emit(LoginFailureState(errorMessage));
   }
+}
 
   Future<bool> validateToken(String token) async {
     try {
@@ -260,7 +198,7 @@ class AuthCubit extends Cubit<AuthState> {
         ),
       );
 
-      print("🔍 Token validation response: ${response.data}");
+      print(" Token validation response: ${response.data}");
 
       if (response.statusCode == 200 && response.data["success"] == true) {
         return true;
@@ -268,7 +206,7 @@ class AuthCubit extends Cubit<AuthState> {
         return false;
       }
     } catch (e) {
-      print("🔴 Error in validateToken: $e");
+      print(" Error in validateToken: $e");
       return false;
     }
   }
@@ -332,68 +270,82 @@ class AuthCubit extends Cubit<AuthState> {
       emit(RegisterFailureState(e.toString()));
       print("Error during registration: $e");
     }
-  }
 
-  void _navigateAfterAuth(BuildContext context) async {
-    try {
-      print("Starting navigation..."); // طباعة بداية التنقل
 
-      // استرجاع البيانات المخزنة مع fallback
-      // final role = await CacheNetwork.getCacheData(key: AppConstants.roleIdKey) ?? 'user';
-      // final token = await CacheNetwork.getCacheData(key: 'token') ?? '';
-      final role =
-          CacheNetwork.getStringFromCache(key: AppConstants.roleIdKey) ??
-          'user';
-      final token = CacheNetwork.getStringFromCache(key: AppConstants.token) ?? '';
-      // ignore: unused_local_variable
-      final isFirstTime =
-          CacheNetwork.getBoolFromCache(key: 'farmFirstTime') ?? true;
+// void _navigateAfterAuth(BuildContext context) async {
+//   try {
+//     final roleId = CacheNetwork.getStringFromCache(key: AppConstants.roleIdKey) ?? '5';
+//     final token = CacheNetwork.getStringFromCache(key: AppConstants.token) ?? '';
+//     final isFirstTime = CacheNetwork.getBoolFromCache(key: 'farmFirstTime') ?? true;
 
-      print(
-        "Navigation Data - Role: $role, Token: ${token.isNotEmpty ? 'exists' : 'missing'}",
-      ); // طباعة البيانات
+//     if (token.isEmpty) {
+//       Navigator.pushReplacementNamed(context, Routes.loginRoute);
+//       return;
+//     }
 
-      if (token.isEmpty) {
-        print("No token found, redirecting to login");
-        Navigator.pushReplacementNamed(context, Routes.loginRoute);
-        return;
-      }
+//     switch (roleId) {
+//       case '6': // مزارع
+//         if (isFirstTime) {
+//           Navigator.pushReplacementNamed(context, Routes.farmSetupRoute);
+//         } else {
+//           Navigator.pushReplacementNamed(context, Routes.farmerHomeRoute);
+//         }
+//         break;
+//       case '7': // دكتور
+//         Navigator.pushReplacementNamed(context, Routes.doctorHomeRoute);
+//         break;
+//       default: // هاوي
+//         Navigator.pushReplacementNamed(context, Routes.userHomeRoute);
+//     }
+//   } catch (e) {
+//     print('Navigation Error: $e');
+//     Navigator.pushReplacementNamed(context, Routes.loginRoute);
+//   }
+// }
+// }
 
-      print("Navigating based on role: $role"); // طباعة التنقل بناءً على الدور
+}
 
-      switch (role) {
-        case 'farmer':
-          final isFirstTime =
-              CacheNetwork.getBoolFromCache(key: 'farmFirstTime') ?? true;
-          print(
-            "Farmer - isFirstTime: $isFirstTime",
-          ); // طباعة إذا كان أول استخدام
-          if (isFirstTime) {
-            Navigator.pushReplacementNamed(context, Routes.farmSetupRoute);
-          } else {
-            // Navigator.pushReplacementNamed(context, Routes.farmerHomeRoute);
-            Navigator.pushReplacementNamed(context, Routes.layoutRoute);
-          }
-          break;
+// أضف هذه الدالة
+void _navigateAfterAuth(BuildContext context) async {
+  try {
+    final roleId = await CacheNetwork.getStringFromCache(key: AppConstants.roleIdKey) ?? '5';
+    final token = await CacheNetwork.getStringFromCache(key: AppConstants.token) ?? '';
+    
+    print('🔴 RoleID from cache: $roleId');
+    print('🔴 Token from cache: $token');
+          print('🔴 RoleID from cache: $roleId');
+    print('🔴 Token from cache: $token');
 
-        case 'doctor':
-          print("Navigating to doctor home"); // طباعة التنقل إلى صفحة الطبيب
-          // Navigator.pushReplacementNamed(context, Routes.doctorHomeRoute);
-          Navigator.pushReplacementNamed(context, Routes.doctorLayoutRoute);
-          break;
-
-        default:
-          print("Navigating to user home"); // طباعة التنقل إلى صفحة المستخدم
-          // Navigator.pushReplacementNamed(context, Routes.userHomeRoute);
-          Navigator.pushReplacementNamed(context, Routes.layoutRoute);
-      }
-    } catch (e) {
-      print("Navigation error: $e"); // طباعة الخطأ أثناء التنقل
+    if (token.isEmpty) {
       Navigator.pushReplacementNamed(context, Routes.loginRoute);
+      return;
     }
+ 
+
+    switch (roleId) {
+      case '6': // Farmer
+        final isFirstTime = await CacheNetwork.getBoolFromCache(key: 'farmFirstTime') ?? true;
+        print('🔴 Farmer - isFirstTime: $isFirstTime');
+        if (isFirstTime) {
+          Navigator.pushReplacementNamed(context, Routes.farmSetupRoute);
+        } else {
+          Navigator.pushReplacementNamed(context, Routes.farmerHomeRoute);
+        }
+        break;
+      case '7': // Doctor
+        print('🔴 Navigating to doctor home');
+        Navigator.pushReplacementNamed(context, Routes.doctorHomeRoute);
+        break;
+      default: // User (roleId = 5)
+        print('🔴 Navigating to user home');
+        Navigator.pushReplacementNamed(context, Routes.userHomeRoute);
+    }
+  } catch (e) {
+    print('🔴 Navigation Error: $e');
+    Navigator.pushReplacementNamed(context, Routes.loginRoute);
   }
-
-
+}
 
   // إرسال OTP
   Future<void> sendOTP(String email) async {
@@ -451,3 +403,4 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 }
+
