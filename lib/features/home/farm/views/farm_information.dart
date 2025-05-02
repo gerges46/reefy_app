@@ -393,12 +393,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../core/utils/constants/app_router.dart';
-import '../../../core/utils/constants/assets_manager.dart';
-import '../../../core/utils/constants/color_manager.dart';
-import '../../../core/utils/constants/values_manager.dart';
-import '../view_model/cubit/home_cubit.dart';
-import '../view_model/cubit/home_state.dart';
+import '../../../../core/utils/constants/app_router.dart';
+import '../../../../core/utils/constants/assets_manager.dart';
+import '../../../../core/utils/constants/color_manager.dart';
+import '../../../../core/utils/constants/values_manager.dart';
+import '../../../../shared/server_locator.dart';
+import '../../view_model/cubit/home_cubit.dart';
+import '../../view_model/cubit/home_state.dart';
 
 class FarmInformationView extends StatelessWidget {
   const FarmInformationView({super.key});
@@ -406,7 +407,7 @@ class FarmInformationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit()..fetchFarms(),
+      create: (context) => sl<HomeCubit>()..fetchFarms(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
           if (state is FarmFailureState) {

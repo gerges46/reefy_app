@@ -18,8 +18,8 @@ class ImageAssets {
   static const String doctor = "$imagePath/doctor.png";
   static const String user = "$imagePath/boy.png";
   static const String farmer = "$imagePath/farmer.png";
-  static const String farmerNav = "$imagePath/farmer_nav.svg";
-  static const String doctorNav = "$imagePath/doctor_nav.svg";
-  static const String priceNav = "$imagePath/price_nav.svg";
+  static const String farmerNav = "$imagePath/farmer_nav.png";
+  static const String doctorNav = "$imagePath/doctor_nav.png";
+  static const String priceNav = "$imagePath/price_nav.png";
   static const String farmImage = "$imagePath/farm.png";
 }

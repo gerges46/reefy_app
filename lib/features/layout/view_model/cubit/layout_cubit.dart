@@ -9,7 +9,7 @@ import '../../../../core/utils/constants/app_constant.dart';
 import '../../../../shared/shared_preference_helper.dart';
 import '../../../home/user/views/user_home_view.dart';
 import '../../../prices/price_view.dart';
-import '../../../profile/views/profile_view.dart';
+
 
 class LayoutCubit extends Cubit<LayoutState> {
   final AuthCubit authCubit;
@@ -31,8 +31,8 @@ class LayoutCubit extends Cubit<LayoutState> {
         FarmerHomeView(),
      //   FarmerToolsPage(),
         PriceView(),
-        ProfileView(),
-        ProfileView(),
+        // ProfileView(),
+        // ProfileView(),
       ];
   } 
   else if (roleId == '7') { // دكتور
@@ -40,16 +40,16 @@ class LayoutCubit extends Cubit<LayoutState> {
         DoctorHomeView(),
      //   DoctorAppointmentsPage(),
         PriceView(),
-        ProfileView(),
-        ProfileView(),
+        // ProfileView(),
+        // ProfileView(),
       ];
   } 
   else { // هاوي
      return [
         UserHomeView(),
         PriceView(),
-        ProfileView(),
-        ProfileView(),
+        // ProfileView(),
+        // ProfileView(),
       ];
   }
   }

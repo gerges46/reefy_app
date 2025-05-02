@@ -1,5 +1,5 @@
 import 'package:checkin/core/utils/constants/app_constant.dart';
-import 'package:checkin/features/profile/views/profile_view.dart';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +25,7 @@ final TextEditingController searchController = TextEditingController();
   final List<Widget> pages = [
     DoctorHomeView(),
     PriceView(),
-    ProfileView(),
+    //ProfileView(),
   ];
 
   List<Doctor> _allDoctors = [];

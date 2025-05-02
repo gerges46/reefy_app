@@ -24,12 +24,29 @@
 //   FetchFarmFailureState(this.errorMessage);
 // }
 
-import '../../model/farm_info_model.dart';
+import '../../farm/model/farm_info_model.dart';
 
 
 class HomeState {}
 
-final class HomeInitialState extends HomeState {}
+
+class HomeInitialState extends HomeState {}
+
+class HomeLoadingState extends HomeState {}
+
+class HomeLoadedState extends HomeState {
+  final String userRole;
+  
+  HomeLoadedState(this.userRole);
+}
+
+class HomeErrorState extends HomeState {
+  final String error;
+  
+  HomeErrorState(this.error);
+}
+
+
 
 class ChangeHomeNavBarState extends HomeState {}
 

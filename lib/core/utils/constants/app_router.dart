@@ -1,8 +1,8 @@
 import 'package:checkin/features/auth/views/role_view.dart';
 import 'package:checkin/features/home/doctor/views/doctor_layout_view.dart';
-import 'package:checkin/features/home/views/barn_view.dart';
+import 'package:checkin/features/home/farm/views/barn_view.dart';
 import 'package:checkin/features/home/doctor/views/doctor_home_view.dart';
-import 'package:checkin/features/home/views/farm_information.dart';
+import 'package:checkin/features/home/farm/views/farm_information.dart';
 import 'package:checkin/features/home/user/views/user_home_view.dart';
 import 'package:checkin/features/layout/views/main_layout_view.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,8 @@ import '../../../features/auth/views/new_password_view.dart';
 import '../../../features/auth/views/otp_view.dart';
 import '../../../features/auth/views/register_view.dart';
 import '../../../features/home/views/farmer_home_view.dart';
-import '../../../features/home/views/setup_farm_view.dart';
+import '../../../features/home/views/home_view.dart';
+import '../../../features/home/farm/views/setup_farm_view.dart';
 import '../../../features/onbarding/views/onboarding_view.dart';
 import '../../../features/splash/views/splash_view.dart';
 import 'app_strings.dart';
@@ -41,6 +42,7 @@ class Routes {
   static const String userHomeRoute = "/userHome";
   static const String layoutRoute = "/layout";
   static const String doctorLayoutRoute = "/doctorLayout";
+ 
   
 }
 
@@ -58,7 +60,7 @@ class RouteGenerator {
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_) => const RegisterView());
       case Routes.homeRoute:
-        return MaterialPageRoute(builder: (_) => const FarmerHomeView());
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
 
       case Routes.otpRoute:
         return MaterialPageRoute(builder: (_) => const OtpView());

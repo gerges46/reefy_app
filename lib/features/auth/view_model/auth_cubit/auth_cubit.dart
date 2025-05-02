@@ -404,7 +404,8 @@ Future<void> login({
       
       // توجيه المستخدم للصفحة المناسبة بناءً على الـ roleId من الاستجابة
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _navigateBasedOnRole(context, roleId);
+//_navigateBasedOnRole(context, roleId);
+_navigateAfterAuth(context);
       });
     } else {
       clearSelectedRole();
@@ -424,23 +425,24 @@ Future<void> login({
   }
 }
 
-// دالة جديدة للتوجيه بناءً على الـ roleId المستلم من الـ API
-void _navigateBasedOnRole(BuildContext context, String roleId) {
-  print('🔴 Navigating based on API roleId: $roleId');
+// // دالة جديدة للتوجيه بناءً على الـ roleId المستلم من الـ API
+// void _navigateBasedOnRole(BuildContext context, String roleId) 
+// {
+//   print('🔴 Navigating based on API roleId: $roleId');
   
-  switch (roleId) {
-    case '6': // Farmer
-      _navigateToFarmerScreens(context);
-      break;
-    case '7': // Doctor
-      print('🔴 Navigating to doctor home');
-      Navigator.pushReplacementNamed(context, Routes.doctorHomeRoute);
-      break;
-    default: // User (roleId = 5)
-      print('🔴 Navigating to user home');
-      Navigator.pushReplacementNamed(context, Routes.userHomeRoute);
-  }
-}
+//   switch (roleId) {
+//     case '6': // Farmer
+//       _navigateToFarmerScreens(context);
+//       break;
+//     case '7': // Doctor
+//       print('🔴 Navigating to doctor home');
+//       Navigator.pushReplacementNamed(context, Routes.doctorHomeRoute);
+//       break;
+//     default: // User (roleId = 5)
+//       print('🔴 Navigating to user home');
+//       Navigator.pushReplacementNamed(context, Routes.userHomeRoute);
+//   }
+// }
 
 // دالة للتحقق من إذا كان المزارع يستخدم التطبيق لأول مرة
 Future<void> _navigateToFarmerScreens(BuildContext context) async {
@@ -455,6 +457,24 @@ Future<void> _navigateToFarmerScreens(BuildContext context) async {
 }
 
 
+
+// تحديث دالة التنقل بعد تسجيل الدخول في AuthCubit
+void _navigateAfterAuth(BuildContext context) async {
+  try {
+    final token = await CacheNetwork.getStringFromCache(key: AppConstants.token) ?? '';
+    
+    if (token.isEmpty) {
+      Navigator.pushReplacementNamed(context, Routes.loginRoute);
+      return;
+    }
+
+    // بغض النظر عن نوع المستخدم، توجيه الجميع إلى الهوم سكرين الموحدة
+    Navigator.pushReplacementNamed(context, Routes.homeRoute);
+  } catch (e) {
+    print('🔴 Navigation Error: $e');
+    Navigator.pushReplacementNamed(context, Routes.loginRoute);
+  }
+}
   // إرسال OTP
   Future<void> sendOTP(String email) async {
     emit(ResetPasswordLoading());

@@ -21,7 +21,7 @@
 //   }
 // }
 class FarmModel {
-  final int id;
+  //final int id;
   final String farmName;
   final String address;
   final String region;
@@ -29,7 +29,7 @@ class FarmModel {
   final int userId;
 
   FarmModel({
-    required this.id,
+    //required this.id,
     required this.farmName,
     required this.address,
     required this.region,
@@ -40,7 +40,7 @@ class FarmModel {
   // Factory Constructor لتحويل JSON إلى كائن FarmModel
   factory FarmModel.fromJson(Map<String, dynamic> json) {
     return FarmModel(
-      id: json['id'],
+    //  id: json['id'],
       farmName: json['farmName'],  // التأكد من أن المفتاح مطابق للـ API
       address: json['address'],
       region: json['region'],
@@ -52,7 +52,7 @@ class FarmModel {
   // لتحويل الكائن إلى JSON عند الإرسال للـ API
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+    //  'id': id,
       'farmName': farmName,
       'address': address,
       'region': region,

@@ -1,16 +1,18 @@
 
 import 'package:checkin/features/auth/views/widgets/custom_textform_field.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../core/utils/constants/app_router.dart';
-import '../../../core/utils/constants/assets_manager.dart';
-import '../../../core/utils/constants/color_manager.dart';
-import '../../../core/utils/constants/values_manager.dart';
-import '../../../shared/custom_button.dart';
-import '../../auth/views/widgets/custom_snackbar.dart';
-import '../view_model/cubit/home_cubit.dart';
-import '../view_model/cubit/home_state.dart';
+import '../../../../core/utils/constants/app_router.dart';
+import '../../../../core/utils/constants/assets_manager.dart';
+import '../../../../core/utils/constants/color_manager.dart';
+import '../../../../core/utils/constants/values_manager.dart';
+import '../../../../shared/custom_button.dart';
+import '../../../../shared/server_locator.dart';
+import '../../../auth/views/widgets/custom_snackbar.dart';
+import '../../view_model/cubit/home_cubit.dart';
+import '../../view_model/cubit/home_state.dart';
 
 class SetupFarmView extends StatelessWidget {
   const SetupFarmView({super.key});
@@ -18,7 +20,7 @@ class SetupFarmView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit()..fetchFarms(),
+      create: (context) =>sl<HomeCubit>()..fetchFarms(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
           if (state is FarmSuccessState) {
