@@ -436,8 +436,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
-import '../../../core/utils/constants/assets_manager.dart';
-import '../../../core/utils/constants/color_manager.dart';
+
 import '../../profile/views/profile_view.dart';
 import '../doctor/views/doctor_home_view.dart';
 import '../view_model/cubit/home_cubit.dart';
@@ -558,56 +557,403 @@ import '../view_model/cubit/home_state.dart';
 //   _NavItem({this.icon, this.svgPath});
 // }
 
-class HomeScreen extends StatelessWidget {
+// class HomeScreen extends StatelessWidget {
+//   const HomeScreen({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocConsumer<HomeCubit, HomeState>(
+//       listener: (context, state) {
+//         if (state is HomeErrorState) {
+//           ScaffoldMessenger.of(
+//             context,
+//           ).showSnackBar(SnackBar(content: Text(state.error)));
+//         }
+//       },
+//       builder: (context, state) {
+//         final homeCubit = context.read<HomeCubit>();
+    
+//         if (state is HomeLoadingState) {
+//           return const Scaffold(
+//             body: Center(child: CircularProgressIndicator()),
+//           );
+//         }
+//          if (!homeCubit.roleLoaded || state is HomeLoadingState) {
+//           return const Scaffold(
+//             body: Center(child: CircularProgressIndicator()),
+//           );
+//         }
+//         return Scaffold(
+//           body: _getScreenForIndex(homeCubit.currentIndex),
+//           bottomNavigationBar: BottomNavigationBar(
+//             backgroundColor: Colors.white,
+//             currentIndex: homeCubit.currentIndex,
+//             onTap: (index) => _onTabTapped(context, index),
+//             selectedItemColor: ColorManager.primary,
+//             unselectedItemColor: Colors.grey,
+//             type: BottomNavigationBarType.fixed,
+//             items: [
+//               BottomNavigationBarItem(
+//                 icon: Icon(Icons.home),
+//                 label: 'الرئيسية',
+//               ),
+//               BottomNavigationBarItem(
+//                 // icon: Icon(Icons.medical_services),
+//                 icon:Icon(FontAwesomeIcons.userDoctor),
+//                 label: 'الطبيب',
+//               ),
+//               BottomNavigationBarItem(
+//                 // icon: Icon(Icons.agriculture),
+//                 icon: Icon(FontAwesomeIcons.personDigging),
+//                 label: 'المزارع',
+//               ),
+//               BottomNavigationBarItem(
+//                 icon: Icon(Icons.person),
+//                 label: 'الحساب',
+//               ),
+//             ],
+//           ),
+//         );
+//       },
+//     );
+//   }
+
+//   void _onTabTapped(BuildContext context, int index) {
+//     final homeCubit = context.read<HomeCubit>();
+
+//     // إذا المستخدم حاول يفتح المزارع وهو مش مزارع
+//     if (index == 2 && homeCubit.userRole != '6') {
+//       _showRestrictedAccessDialog(
+//         context,
+//         'لا يمكنك الوصول إلى هذه الصفحة، هذه الميزة متاحة فقط للمزارعين.',
+//       );
+//       return;
+//     }
+
+//     homeCubit.changeTab(index);
+//   }
+
+//   void _showRestrictedAccessDialog(BuildContext context, String message) {
+//     showDialog(
+//       context: context,
+//       builder:
+//           (_) => AlertDialog(
+//             title: const Text('غير مصرح'),
+//             content: Text(message),
+//             actions: [
+//               TextButton(
+//                 onPressed: () => Navigator.of(context).pop(),
+//                 child: const Text('حسناً'),
+//               ),
+//             ],
+//           ),
+//     );
+//   }
+
+//   Widget _getScreenForIndex(int index) {
+//     switch (index) {
+//       case 0:
+//         return const UserHomeView();
+//       case 1:
+//         return const DoctorHomeView();
+//       case 2:
+//         return const FarmerHomeView();
+//       case 3:
+//         return const ProfileScreen();
+//       default
+// :
+//         return const UserHomeView();
+//     }
+//   }
+// // }
+// class HomeScreen extends StatelessWidget {
+//   const HomeScreen({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     WidgetsBinding.instance.addPostFrameCallback((_) {
+//     context.read<HomeCubit>().reloadUserRole();
+//   });
+//     return BlocConsumer<HomeCubit, HomeState>(
+//       listener: (context, state) {
+//         if (state is HomeErrorState) {
+//           ScaffoldMessenger.of(context)
+//               .showSnackBar(SnackBar(content: Text(state.error)));
+//         }
+//       },
+//       builder: (context, state) {
+//         final homeCubit = context.read<HomeCubit>();
+
+//         // لا تبني أي شيء قبل تحميل الدور
+//         if (!homeCubit.roleLoaded || state is HomeLoadingState) {
+//           return const Scaffold(
+//             body: Center(child: CircularProgressIndicator()),
+//           );
+//         }
+
+//         // الشاشات حسب الدور
+//         final roleId = homeCubit.userRole;
+//         List<Widget> roleScreens;
+
+//         if (roleId == '6') {
+//           // مزارع
+//           roleScreens = [
+//             const FarmerHomeView(),
+//             const DoctorHomeView(),
+//             const FarmerHomeView(),
+//             const ProfileScreen(),
+//           ];
+//         } else if (roleId == '7') {
+//           // طبيب
+//           roleScreens = [
+//             const DoctorHomeView(),
+//             const DoctorHomeView(),
+//             const FarmerHomeView(),
+//             const ProfileScreen(),
+//           ];
+//         } else {
+//           // مستخدم عادي
+//           roleScreens = [
+//             const UserHomeView(),
+//             const DoctorHomeView(),
+//             const FarmerHomeView(),
+//             const ProfileScreen(),
+//           ];
+//         }
+
+//         return Scaffold(
+//           body: roleScreens[homeCubit.currentIndex],
+//           bottomNavigationBar: BottomNavigationBar(
+//             backgroundColor: Colors.white,
+//             currentIndex: homeCubit.currentIndex,
+//             onTap: (index) => _onTabTapped(context, index),
+//             selectedItemColor: ColorManager.primary,
+//             unselectedItemColor: Colors.grey,
+//             type: BottomNavigationBarType.fixed,
+//             items: const [
+//               BottomNavigationBarItem(
+//                 icon: Icon(Icons.home),
+//                 label: 'الرئيسية',
+//               ),
+//               BottomNavigationBarItem(
+//                 icon: Icon(FontAwesomeIcons.userDoctor),
+//                 label: 'الطبيب',
+//               ),
+//               BottomNavigationBarItem(
+//                 icon: Icon(FontAwesomeIcons.personDigging),
+//                 label: 'المزارع',
+//               ),
+//               BottomNavigationBarItem(
+//                 icon: Icon(Icons.person),
+//                 label: 'الحساب',
+//               ),
+//             ],
+//           ),
+//         );
+//       },
+//     );
+//   }
+
+//   void _onTabTapped(BuildContext context, int index) {
+//     final homeCubit = context.read<HomeCubit>();
+
+//     // إذا المستخدم مش مزارع
+//     if (index == 2 && homeCubit.userRole != '6') {
+//       _showRestrictedAccessDialog(
+//         context,
+//         'لا يمكنك الوصول إلى هذه الصفحة، هذه الميزة متاحة فقط للمزارعين.',
+//       );
+//       return;
+//     }
+
+//     homeCubit.changeTab(index);
+//   }
+
+//   void _showRestrictedAccessDialog(BuildContext context, String message) {
+//     showDialog(
+//       context: context,
+//       builder: (_) => AlertDialog(
+//         title: const Text('غير مصرح'),
+//         content: Text(message),
+//         actions: [
+//           TextButton(
+//             onPressed: () => Navigator.of(context).pop(),
+//             child: const Text('حسناً'),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// // }
+// class HomeScreen extends StatelessWidget {
+//   const HomeScreen({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<HomeCubit, HomeState>(
+//       builder: (context, state) {
+//         final homeCubit = context.read<HomeCubit>();
+
+//         if (!homeCubit.roleLoaded || state is HomeLoadingState) {
+//           // هنا هيستنى فعلاً تحميل الدور
+//           return const Scaffold(
+//             body: Center(child: CircularProgressIndicator()),
+//           );
+//         }
+
+//         final roleId = homeCubit.userRole;
+
+//         print("🔁 UI بناء ب roleId = $roleId");
+
+//         List<Widget> roleScreens;
+
+//         if (roleId == '6') {
+//           roleScreens = [
+//             const FarmerHomeView(),
+//             const DoctorHomeView(),
+//             const FarmerHomeView(),
+//             const ProfileScreen(),
+//           ];
+//         } else if (roleId == '7') {
+//           roleScreens = [
+//             const DoctorHomeView(),
+//             const DoctorHomeView(),
+//             const FarmerHomeView(),
+//             const ProfileScreen(),
+//           ];
+//         } else {
+//           roleScreens = [
+//             const UserHomeView(),
+//             const DoctorHomeView(),
+//             const FarmerHomeView(),
+//             const ProfileScreen(),
+//           ];
+//         }
+
+//         return Scaffold(
+//           body: roleScreens[homeCubit.currentIndex],
+//           bottomNavigationBar: BottomNavigationBar(
+//             currentIndex: homeCubit.currentIndex,
+//             onTap: (index) => _onTabTapped(context, index),
+//             selectedItemColor: Colors.green,
+//             unselectedItemColor: Colors.grey,
+//             items: const [
+//               BottomNavigationBarItem(icon: Icon(Icons.home), label: 'الرئيسية'),
+//               BottomNavigationBarItem(icon: Icon(Icons.local_hospital), label: 'الطبيب'),
+//               BottomNavigationBarItem(icon: Icon(Icons.agriculture), label: 'المزارع'),
+//               BottomNavigationBarItem(icon: Icon(Icons.person), label: 'الحساب'),
+//             ],
+//           ),
+//         );
+//       },
+//     );
+//   }
+  
+//   void _onTabTapped(BuildContext context, int index) {
+//     final homeCubit = context.read<HomeCubit>();
+
+//     // إذا المستخدم مش مزارع
+//     if (index == 2 && homeCubit.userRole != '6') {
+//       _showRestrictedAccessDialog(
+//         context,
+//         'لا يمكنك الوصول إلى هذه الصفحة، هذه الميزة متاحة فقط للمزارعين.',
+//       );
+//       return;
+//     }
+
+//     homeCubit.changeTab(index);
+//   }
+
+//   void _showRestrictedAccessDialog(BuildContext context, String message) {
+//     showDialog(
+//       context: context,
+//       builder: (_) => AlertDialog(
+//         title: const Text('غير مصرح'),
+//         content: Text(message),
+//         actions: [
+//           TextButton(
+//             onPressed: () => Navigator.of(context).pop(),
+//             child: const Text('حسناً'),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+ // وتأكد من مسار حالة الـ HomeCubit
+// ... باقي الـ imports بتاعتك
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // استدعاء إعادة تحميل الدور عند بدء الشاشة
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<HomeCubit>().ensureRoleLoaded();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeState>(
-      listener: (context, state) {
-        if (state is HomeErrorState) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.error)));
-        }
-      },
+    return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         final homeCubit = context.read<HomeCubit>();
-    
-        if (state is HomeLoadingState) {
+        print('🏠 Building HomeScreen with roleId: ${homeCubit.userRole}, roleLoaded: ${homeCubit.roleLoaded}');
+        if (!homeCubit.roleLoaded || state is HomeLoadingState) {
+          // هنا هيستنى فعلاً تحميل الدور
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
-    
+
+        final roleId = homeCubit.userRole;
+
+        print("🔁 UI بناء ب roleId = $roleId");
+
+        List<Widget> roleScreens;
+
+        if (roleId == '6') {
+          roleScreens = [
+            const FarmerHomeView(),
+            const DoctorHomeView(),
+            const FarmerHomeView(),
+            const ProfileScreen(),
+          ];
+        } else if (roleId == '7') {
+          roleScreens = [
+            const DoctorHomeView(),
+            const DoctorHomeView(),
+            const FarmerHomeView(),
+            const ProfileScreen(),
+          ];
+        } else {
+          roleScreens = [
+            const UserHomeView(),
+            const DoctorHomeView(),
+            const FarmerHomeView(),
+            const ProfileScreen(),
+          ];
+        }
+
         return Scaffold(
-          body: _getScreenForIndex(homeCubit.currentIndex),
+          body: roleScreens[homeCubit.currentIndex],
           bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Colors.white,
             currentIndex: homeCubit.currentIndex,
             onTap: (index) => _onTabTapped(context, index),
-            selectedItemColor: ColorManager.primary,
+            selectedItemColor: Colors.green,
             unselectedItemColor: Colors.grey,
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'الرئيسية',
-              ),
-              BottomNavigationBarItem(
-                // icon: Icon(Icons.medical_services),
-                icon:Icon(FontAwesomeIcons.userDoctor),
-                label: 'الطبيب',
-              ),
-              BottomNavigationBarItem(
-                // icon: Icon(Icons.agriculture),
-                icon: Icon(FontAwesomeIcons.personDigging),
-                label: 'المزارع',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'الحساب',
-              ),
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'الرئيسية'),
+              BottomNavigationBarItem(icon: Icon(Icons.local_hospital), label: 'الطبيب'),
+              BottomNavigationBarItem(icon: Icon(Icons.agriculture), label: 'المزارع'),
+              BottomNavigationBarItem(icon: Icon(Icons.person), label: 'الحساب'),
             ],
           ),
         );
@@ -618,7 +964,7 @@ class HomeScreen extends StatelessWidget {
   void _onTabTapped(BuildContext context, int index) {
     final homeCubit = context.read<HomeCubit>();
 
-    // إذا المستخدم حاول يفتح المزارع وهو مش مزارع
+    // إذا المستخدم مش مزارع
     if (index == 2 && homeCubit.userRole != '6') {
       _showRestrictedAccessDialog(
         context,
@@ -633,32 +979,16 @@ class HomeScreen extends StatelessWidget {
   void _showRestrictedAccessDialog(BuildContext context, String message) {
     showDialog(
       context: context,
-      builder:
-          (_) => AlertDialog(
-            title: const Text('غير مصرح'),
-            content: Text(message),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('حسناً'),
-              ),
-            ],
+      builder: (_) => AlertDialog(
+        title: const Text('غير مصرح'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('حسناً'),
           ),
+        ],
+      ),
     );
-  }
-
-  Widget _getScreenForIndex(int index) {
-    switch (index) {
-      case 0:
-        return const UserHomeView();
-      case 1:
-        return const DoctorHomeView();
-      case 2:
-        return const FarmerHomeView();
-      case 3:
-        return const ProfileScreen();
-      default:
-        return const UserHomeView();
-    }
   }
 }

@@ -1,13 +1,15 @@
+
 import '../model/farm_info_model.dart';
 import '../services/farm_setup_services.dart';
 
 class FarmRepository {
-  final FarmService _service;
+  final FarmService service;
+  FarmRepository(this.service);
 
-  FarmRepository(this._service);
-
-  Future<void> createFarm(FarmModel farm) => _service.createFarm(farm);
-  Future<void> updateFarm(int id, FarmModel farm) => _service.updateFarm(id, farm);
-  Future<void> deleteFarm(int id) => _service.deleteFarm(id);
-  Future<List<FarmModel>> getUserFarms(int userId) => _service.getUserFarms(userId);
+  Future<void> addFarm(FarmModel farm) => service.createFarm(farm);
+  Future<List<FarmModel>> fetchFarms() => service.getFarms();
+  Future<FarmModel> fetchFarmById(int id) => service.getFarmById(id);
+  Future<void> editFarm(int id, FarmModel farm) => service.updateFarm(id, farm);
+  Future<void> removeFarm(int id) => service.deleteFarm(id);
 }
+

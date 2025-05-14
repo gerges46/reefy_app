@@ -1,49 +1,64 @@
-
+import 'package:checkin/shared/cubit/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/utils/constants/app_constant.dart';
-import '../../../core/utils/constants/app_router.dart';
-import '../../../core/utils/constants/color_manager.dart';
-import '../../../shared/shared_preference_helper.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:checkin/features/profile/view_model/cubit/profile_cubit.dart';
+import 'package:checkin/features/profile/view_model/cubit/profile_state.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            radius: 50,
-            backgroundColor: ColorManager.primary,
-            child: const Icon(Icons.person, size: 80, color: Colors.white),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            'الملف الشخصي',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size.fromHeight(50),
+    return BlocProvider(
+      create: (_) => ProfileCubit()..loadProfileData(),
+      child: BlocBuilder<ProfileCubit, ProfileState>(
+        builder: (context, state) {
+          if (state is ProfileLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ProfileLoaded) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircleAvatar(
+                    radius: 50,
+                    child: Icon(Icons.person, size: 80, color: Colors.white),
+                  ),
+                  SizedBox(height: 20.h),
+                  Text('الاسم:     ${state.name}'),
+                  Text('الإيميل:   ${state.email}'),
+                  Text('رقم الهاتف:   ${state.phone}'),
+                  SizedBox(height: 20.h),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
+                        vertical: 10.h,
+                      ),
+                    ),
+                    onPressed: () {
+                      // نسيت كلمة المرور
+                    },
+                    child: const Text('نسيت كلمة المرور'),
+                  ),
+                  SizedBox(height: 20.h),
+                  IconButton(
+                    icon: Icon(Icons.light_mode, color: Colors.red),
+                    onPressed: () {
+                      context.read<ThemeCubit>().toggleTheme();
+                    },
+                  ),
+                ],
               ),
-              onPressed: () async {
-                // عملية تسجيل الخروج
-                await CacheNetwork.deleteCacheItem(key: AppConstants.token);
-                await CacheNetwork.deleteCacheItem(key: AppConstants.roleIdKey);
-                
-                // التنقل إلى صفحة تسجيل الدخول
-                Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
-              },
-              child: const Text('تسجيل الخروج'),
-            ),
-          ),
-        ],
+            );
+          } else if (state is ProfileError) {
+            return Center(child: Text(state.message));
+          } else {
+            return const SizedBox();
+          }
+        },
       ),
     );
   }

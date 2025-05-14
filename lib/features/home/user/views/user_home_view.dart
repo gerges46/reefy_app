@@ -1,3 +1,4 @@
+import 'package:checkin/features/home/doctor/views/widgets/custom_search_bar.dart';
 import 'package:checkin/features/home/user/view_model/cubit/user_cubit.dart';
 import 'package:checkin/features/home/user/view_model/cubit/user_state.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +66,7 @@ class UserHomeView extends StatelessWidget {
                   SliverPersistentHeader(
                     pinned: true,
                     delegate: SearchBarDelegate(
-                      CustomSearchFieldFarms(
+                      CustomSearchField(
                         controller:
                             BlocProvider.of<UserCubit>(context).searchController,
                         onSearch: () {

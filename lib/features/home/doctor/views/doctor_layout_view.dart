@@ -31,12 +31,12 @@
 // //   }
 // // }
 import 'package:checkin/shared/server_locator.dart';
-import 'package:dio/dio.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
-import '../../../../core/utils/constants/assets_manager.dart';
+
+
 import '../view_model/cubit/doctor_cubit.dart';
 import '../view_model/cubit/doctor_state.dart';
 

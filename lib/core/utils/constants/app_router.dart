@@ -75,8 +75,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const SetupFarmView());
       case Routes.farmInfoRoute:
         return MaterialPageRoute(builder: (_) => const FarmInformationView());
-      case Routes.barnRoute:
-        return MaterialPageRoute(builder: (_) => const BarnView());
+      // case Routes.barnRoute:
+      //   return MaterialPageRoute(builder: (_) => const BarnView());
       case Routes.userHomeRoute:
         return MaterialPageRoute(builder: (_) => const UserHomeView());
       case Routes.doctorHomeRoute:

@@ -27,7 +27,7 @@
 import '../../farm/model/farm_info_model.dart';
 
 
-class HomeState {}
+abstract class HomeState {}
 
 
 class HomeInitialState extends HomeState {}
@@ -38,6 +38,10 @@ class HomeLoadedState extends HomeState {
   final String userRole;
   
   HomeLoadedState(this.userRole);
+  
+
+  @override
+  String toString() => 'HomeLoadedState(userRole: $userRole)';
 }
 
 class HomeErrorState extends HomeState {
